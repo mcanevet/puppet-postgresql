@@ -203,7 +203,7 @@ describe 'server without pg_hba.conf:' do
     it 'perform installation and make sure it is idempotent' do
       pp = <<-EOS.unindent
         class { "postgresql::server":
-          manage_pg_hba_conf => true,
+          manage_pg_hba_conf => false,
         }
       EOS
 
