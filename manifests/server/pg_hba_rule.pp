@@ -15,6 +15,10 @@ define postgresql::server::pg_hba_rule(
   $target      = $postgresql::server::pg_hba_conf_path
 ) {
 
+  if $postgresql::server::manage_pga_conf != true {
+      fail('postgresql::server::manage_pga_conf has been disabled, so this resource is now unused and redundant, either enable that option or remove this resource from your manifests')
+  }
+
   validate_re($type, '^(local|host|hostssl|hostnossl)$',
     "The type you specified [${type}] must be one of: local, host, hostssl, hostnosssl")
 
