@@ -68,7 +68,7 @@ describe 'postgresql::server::pg_hba_rule:' do
   it 'should fail catalogue if postgresql::server::manage_pga_conf is disabled' do
     pp = <<-EOS.unindent
       class { 'postgresql::server':
-        manage_pga_conf => false,
+        manage_pg_hba_conf => false,
       }
       postgresql::server::pg_hba_rule { 'foo':
         type        => "local",
