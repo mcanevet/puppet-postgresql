@@ -104,7 +104,13 @@ class postgresql::params inherits postgresql::globals {
       $client_package_name  = pick($client_package_name, "postgresql-client-${version}")
       $server_package_name  = pick($server_package_name, "postgresql-${version}")
       $contrib_package_name = pick($contrib_package_name, "postgresql-contrib-${version}")
-      $postgis_package_name = pick($postgis_package_name, "postgresql-${version}-postgis-${postgis_version}")
+      $postgis_package_name = pick(
+        $postgis_package_name,
+        versioncmp($postgis_version, '2') ? {
+          '-1'    => "postgresql-${version}-postgis",
+          default => "postgresql-${version}-postgis-${postgis_version}",
+        }
+      )
       $devel_package_name   = pick($devel_package_name, 'libpq-dev')
       $java_package_name    = pick($java_package_name, 'libpostgresql-jdbc-java')
       $plperl_package_name  = pick($plperl_package_name, "postgresql-plperl-${version}")
