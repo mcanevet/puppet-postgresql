@@ -55,6 +55,14 @@ class postgresql::params inherits postgresql::globals {
 
       $service_status      = $service_status
       $python_package_name = pick($python_package_name, 'python-psycopg2')
+
+      $postgis_package_name = pick(
+        $postgis_package_name,
+        versioncmp($postgis_version, '2') ? {
+          '-1'    => "postgis${package_version}",
+          default => "postgis2_${package_version}",
+        }
+      )
     }
 
     'Archlinux': {
